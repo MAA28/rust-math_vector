@@ -10,3 +10,9 @@ A simple and convenient 2D vector type without excessive use of external depende
 ## Using vector2d
 
 You probably don't need any documentation to get by with the `Vector2D` type; functions like `dot`, `length`, and `angle` are hopefully all named intuitively enough for you feel them out. If you do find yourself wondering about certain bits of functionality, then be sure to take a look at the [in-code documentation](src/lib.rs), where you can find examples and explanations of everything on offer.
+
+To add vector2d as a dependency in any of your rust project, just add the following in your cargo.toml dependencies' section :
+
+```toml
+vector2d = { git = "https://github.com/ThomasByr/rust-vector2d" }
+```
