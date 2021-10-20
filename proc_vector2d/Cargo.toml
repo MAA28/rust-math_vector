@@ -1,0 +1,14 @@
+[package]
+name = "proc_vector2d"
+description = "Procedural macros used internally by vector2d"
+version = "1.0.2"
+authors = ["AnthonyYoManz <anthony@anthony-arian.com>"]
+edition = "2018"
+
+repository = "https://gitlab.com/DixieDev/vec2d-rs"
+license = "Unlicense"
+
+[lib]
+proc-macro = true
+
+[dependencies]
