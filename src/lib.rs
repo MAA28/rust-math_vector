@@ -392,6 +392,14 @@ impl Vector2D<f32> {
         self.y.atan2(self.x)
     }
 
+    /// performs rotation of the vector by the given angle in radians
+    pub fn rotate(self, angle: f32) -> Self {
+        let (sin, cos) = f32::sin_cos(angle);
+        let x = self.x * cos - self.y * sin;
+        let y = self.x * sin + self.y * cos;
+        Self { x, y }
+    }
+
     fn_simple_as!(i32);
     fn_simple_as!(i64);
     fn_simple_as!(isize);
@@ -422,6 +430,14 @@ impl Vector2D<f64> {
     /// Get the vector's direction in radians.
     pub fn angle(self) -> f64 {
         self.y.atan2(self.x)
+    }
+
+    /// performs the rotation of the vector by the given angle in radians
+    pub fn rotate(self, angle: f64) -> Self {
+        let (sin, cos) = f64::sin_cos(angle);
+        let x = self.x * cos - self.y * sin;
+        let y = self.x * sin + self.y * cos;
+        Self { x, y }
     }
 
     fn_simple_as!(i32);
