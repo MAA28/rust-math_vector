@@ -397,7 +397,14 @@ impl Vector2D<f32> {
         self.y.atan2(self.x)
     }
 
-    /// performs rotation of the vector by the given angle in radians
+    /// Get the angle between two vectors in radians.
+    pub fn angle_between(self, other: Vector2D<f32>) -> f32 {
+        let dot = Vector2D::<f32>::dot(self, other);
+        let det = self.x * other.y - self.y * other.x;
+        f32::atan2(det, dot)
+    }
+
+    /// Performs rotation of the vector by the given angle in radians
     pub fn rotate(self, angle: f32) -> Self {
         let (sin, cos) = f32::sin_cos(angle);
         let x = self.x * cos - self.y * sin;
@@ -442,7 +449,14 @@ impl Vector2D<f64> {
         self.y.atan2(self.x)
     }
 
-    /// performs the rotation of the vector by the given angle in radians
+    /// Get the angle between two vectors in radians.
+    pub fn angle_between(self, other: Vector2D<f64>) -> f64 {
+        let dot = Vector2D::<f64>::dot(self, other);
+        let det = self.x * other.y - self.y * other.x;
+        f64::atan2(det, dot)
+    }
+
+    /// Performs the rotation of the vector by the given angle in radians
     pub fn rotate(self, angle: f64) -> Self {
         let (sin, cos) = f64::sin_cos(angle);
         let x = self.x * cos - self.y * sin;
