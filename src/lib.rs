@@ -387,6 +387,11 @@ impl Vector2D<f32> {
         }
     }
 
+    /// Get the distance between two vectors.
+    pub fn distance(self, other: Vector2D<f32>) -> f32 {
+        (self - other).length()
+    }
+
     /// Get the vector's direction in radians.
     pub fn angle(self) -> f32 {
         self.y.atan2(self.x)
@@ -425,6 +430,11 @@ impl Vector2D<f64> {
         } else {
             self / len
         }
+    }
+
+    /// Get the distance between two vectors.
+    pub fn distance(self, other: Vector2D<f64>) -> f64 {
+        (self - other).length()
     }
 
     /// Get the vector's direction in radians.
