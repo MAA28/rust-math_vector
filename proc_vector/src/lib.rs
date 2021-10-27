@@ -4,10 +4,11 @@ use proc_macro::TokenStream;
 #[proc_macro]
 pub fn fn_simple_as(ty: TokenStream) -> TokenStream {
     let typename = ty.to_string();
-    format!("pub fn as_{type}s(&self) -> Vector2D<{type}> {{
-			Vector2D {{ 
+    format!("pub fn as_{type}s(&self) -> Vector<{type}> {{
+			Vector {{ 
 				x: self.x as {type},
 				y: self.y as {type},
+                z: self.z as {type},
 			}}
 		}}",
 		type = typename)
@@ -34,10 +35,11 @@ pub fn fn_lower_bounded_as(toks: TokenStream) -> TokenStream {
     }
 
     format!(
-        "pub fn as_{dst_type}s(&self) -> Vector2D<{dst_type}> {{
-			Vector2D {{
+        "pub fn as_{dst_type}s(&self) -> Vector<{dst_type}> {{
+			Vector {{
 				x: {src_type}::max({lower_bound}, self.x) as {dst_type},
 				y: {src_type}::max({lower_bound}, self.y) as {dst_type},
+                z: {src_type}::max({lower_bound}, self.z) as {dst_type},
 			}}
 		}}",
         src_type = src_ty.to_string(),
