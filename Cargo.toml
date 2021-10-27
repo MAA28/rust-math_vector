@@ -1,10 +1,10 @@
 [package]
-name = "vector2d"
-description = "2D vector class"
-version = "0.1.0"
+name = "math_vector"
+description = "3D vector class"
+version = "0.2.0"
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-proc_vector2d = { path = "proc_vector2d", version = "1.0.2" }
+proc_vector = { path = "proc_vector" }
