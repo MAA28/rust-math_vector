@@ -204,3 +204,67 @@ fn normalise_f64() {
     let u = Vector::<f64>::new(1.0 / sqrt3, 1.0 / sqrt3, 1.0 / sqrt3);
     assert_eq!(v.is_close(u), true);
 }
+
+#[test]
+fn rotate_z_f32() {
+    let v = Vector::<f32>::new(1.0, 0.0, 0.0);
+    let r = v.rotate_z(std::f32::consts::PI / 2.0);
+    assert_eq!(Vector::<f32>::new(0.0, 1.0, 0.0).is_close(r), true);
+}
+
+#[test]
+fn rotate_z_f64() {
+    let v = Vector::<f64>::new(1.0, 0.0, 0.0);
+    let r = v.rotate_z(std::f64::consts::PI / 2.0);
+    assert_eq!(Vector::<f64>::new(0.0, 1.0, 0.0).is_close(r), true);
+}
+
+#[test]
+fn rotate_y_f32() {
+    let v = Vector::<f32>::new(1.0, 0.0, 0.0);
+    let r = v.rotate_y(std::f32::consts::PI / 2.0);
+    assert_eq!(Vector::<f32>::new(0.0, 0.0, -1.0).is_close(r), true);
+}
+
+#[test]
+fn rotate_y_f64() {
+    let v = Vector::<f64>::new(1.0, 0.0, 0.0);
+    let r = v.rotate_y(std::f64::consts::PI / 2.0);
+    assert_eq!(Vector::<f64>::new(0.0, 0.0, -1.0).is_close(r), true);
+}
+
+#[test]
+fn rotate_x_f32() {
+    let v = Vector::<f32>::new(0.0, 1.0, 0.0);
+    let r = v.rotate_x(std::f32::consts::PI / 2.0);
+    assert_eq!(Vector::<f32>::new(0.0, 0.0, 1.0).is_close(r), true);
+}
+
+#[test]
+fn rotate_x_f64() {
+    let v = Vector::<f64>::new(0.0, 1.0, 0.0);
+    let r = v.rotate_x(std::f64::consts::PI / 2.0);
+    assert_eq!(Vector::<f64>::new(0.0, 0.0, 1.0).is_close(r), true);
+}
+
+#[test]
+fn rotate_f32() {
+    let v = Vector::<f32>::new(1.0, 0.0, 0.0);
+    let axis = Vector::<f32>::new(1.0, 1.0, 0.0).normalise();
+    let r = v.rotate(std::f32::consts::PI / 2.0, axis);
+    assert_eq!(
+        Vector::<f32>::new(0.5, 0.5, -2f32.sqrt().recip()).is_close(r),
+        true
+    );
+}
+
+#[test]
+fn rotate_f64() {
+    let v = Vector::<f64>::new(1.0, 0.0, 0.0);
+    let axis = Vector::<f64>::new(1.0, 1.0, 0.0).normalise();
+    let r = v.rotate(std::f64::consts::PI / 2.0, axis);
+    assert_eq!(
+        Vector::<f64>::new(0.5, 0.5, -2f64.sqrt().recip()).is_close(r),
+        true
+    );
+}
