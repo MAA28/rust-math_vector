@@ -188,3 +188,19 @@ fn neg() {
     let v = Vector::new(10.3, -5.4, -3.2);
     assert_eq!(Vector::new(-10.3, 5.4, 3.2), -v);
 }
+
+#[test]
+fn normalise_f32() {
+    let v = Vector::<f32>::new(1.0, 1.0, 1.0).normalise();
+    let sqrt3 = f32::sqrt(3.0);
+    let u = Vector::<f32>::new(1.0 / sqrt3, 1.0 / sqrt3, 1.0 / sqrt3);
+    assert_eq!(v.is_close(u), true);
+}
+
+#[test]
+fn normalise_f64() {
+    let v = Vector::<f64>::new(1.0, 1.0, 1.0).normalise();
+    let sqrt3 = f64::sqrt(3.0);
+    let u = Vector::<f64>::new(1.0 / sqrt3, 1.0 / sqrt3, 1.0 / sqrt3);
+    assert_eq!(v.is_close(u), true);
+}
