@@ -4,11 +4,9 @@
 #![cfg_attr(all(feature = "nightly", test), feature(asm, test, core_intrinsics))]
 #![allow(dead_code)]
 
-use std::f32;
-use std::f64;
 use std::mem;
 
-pub const EPSILON: f64 = 1e-8;
+pub const EPSILON: f64 = 1e-8; // Floating-point precision error
 
 /// A trait that allows calculation of inverse square root into a Float(32).
 pub trait InvSqrt32 {
@@ -47,8 +45,8 @@ impl InvSqrt32 for f32 {
         let mut i: u32 = unsafe { mem::transmute(self) }; // evil floating point bit level hacking
         i = 0x5f375a86 - (i >> 1); // what the fuck?
         let y: f32 = unsafe { mem::transmute(i) };
-        let mut y = y * (threehalfs - (x2 * y * y)); // 1st iteration
-        y = y * (threehalfs - (x2 * y * y)); // 2nd iteration, this can be removed
+        let y = y * (threehalfs - (x2 * y * y)); // 1st iteration
+        let y = y * (threehalfs - (x2 * y * y)); // 2nd iteration, this can be removed
 
         return y;
     }
@@ -74,8 +72,8 @@ impl InvSqrt64 for f64 {
         let x2 = self * 0.5;
         let i = MAGIC_U64 - (unsafe { mem::transmute::<_, u64>(self) } >> 1);
         let y: f64 = unsafe { mem::transmute(i) };
-        let mut y = y * (THREEHALFS - (x2 * y * y));
-        y = y * (THREEHALFS - (x2 * y * y));
+        let y = y * (THREEHALFS - (x2 * y * y));
+        let y = y * (THREEHALFS - (x2 * y * y));
         return y;
     }
 }
