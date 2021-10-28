@@ -100,7 +100,7 @@ use proc_vector::{fn_lower_bounded_as, fn_simple_as};
 use protocol::{InvSqrt32, InvSqrt64, EPSILON};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
-/// A 2D vector, containing an `x` and a `y` component. While many types can be
+/// A 3D vector, containing an `x`, `y` and a `z` component. While many types can be
 /// used for a `Vector`'s components, the traits they implement determine
 /// what functions are available.
 ///
