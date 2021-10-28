@@ -440,7 +440,9 @@ impl Vector<f32> {
     /// use math_vector::Vector;
     /// let v = Vector::<f32>::new(-1.0, 0.0, 1.0);
     /// let u = Vector::<f32>::new(-1.000001, 0.000001, 1.000001);
+    /// let w = Vector::<f32>::new(10.0, 0.0, 1.0);
     /// assert_eq!(v.is_close(u), true);
+    /// assert_eq!(v.is_close(w), false);
     pub fn is_close(self, other: Self) -> bool {
         let x_diff = self.x - other.x;
         let y_diff = self.y - other.y;
@@ -511,6 +513,22 @@ impl Vector<f32> {
         Self { x, y, z: self.z }
     }
 
+    /// Performs rotation of the vector by the given angle in radians around the y axis
+    pub fn rotate_y(self, angle: f32) -> Self {
+        let (sin, cos) = angle.sin_cos();
+        let x = self.x * cos + self.z * sin;
+        let z = self.z * cos - self.x * sin;
+        Self { x, y: self.y, z }
+    }
+
+    /// Performs rotation of the vector by the given angle in radians around the x axis
+    pub fn rotate_x(self, angle: f32) -> Self {
+        let (sin, cos) = angle.sin_cos();
+        let y = self.y * cos - self.z * sin;
+        let z = self.y * sin + self.z * cos;
+        Self { x: self.x, y, z }
+    }
+
     fn_simple_as!(i32);
     fn_simple_as!(i64);
     fn_simple_as!(isize);
@@ -527,7 +545,9 @@ impl Vector<f64> {
     /// use math_vector::Vector;
     /// let v = Vector::<f64>::new(-1.0, 0.0, 1.0);
     /// let u = Vector::<f64>::new(-1.000001, 0.000001, 1.000001);
+    /// let w = Vector::<f64>::new(10.0, 0.0, 1.0);
     /// assert_eq!(v.is_close(u), true);
+    /// assert_eq!(v.is_close(w), false);
     pub fn is_close(self, other: Self) -> bool {
         let x_diff = self.x - other.x;
         let y_diff = self.y - other.y;
@@ -596,6 +616,22 @@ impl Vector<f64> {
         let x = self.x * cos - self.y * sin;
         let y = self.x * sin + self.y * cos;
         Self { x, y, z: self.z }
+    }
+
+    /// Performs rotation of the vector by the given angle in radians around the y axis
+    pub fn rotate_y(self, angle: f64) -> Self {
+        let (sin, cos) = angle.sin_cos();
+        let x = self.x * cos + self.z * sin;
+        let z = self.z * cos - self.x * sin;
+        Self { x, y: self.y, z }
+    }
+
+    /// Performs rotation of the vector by the given angle in radians around the x axis
+    pub fn rotate_x(self, angle: f64) -> Self {
+        let (sin, cos) = angle.sin_cos();
+        let y = self.y * cos - self.z * sin;
+        let z = self.y * sin + self.z * cos;
+        Self { x: self.x, y, z }
     }
 
     fn_simple_as!(i32);
