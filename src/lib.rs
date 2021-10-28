@@ -169,6 +169,7 @@ impl<T: Copy + Clone> Vector<T> {
     /// use math_vector::Vector;
     /// let v = Vector::all(42.0);
     /// assert_eq!(v, Vector::new(42.0, 42.0, 42.0));
+    /// ```
     pub fn all(value: T) -> Self {
         Self {
             x: value,
@@ -186,6 +187,7 @@ impl<T: Copy + Clone> Vector<T> {
     /// let i32_vector: Vector<i32> = Vector::new(25, 8, 0);
     /// let f64_vector: Vector<f64> = Vector::from_vec(i32_vector);
     /// assert_eq!(Vector::new(25.0, 8.0, 0.0), f64_vector);
+    /// ```
     pub fn from_vec<U: Into<T> + Copy + Clone>(src: Vector<U>) -> Vector<T> {
         Vector {
             x: src.x.into(),
@@ -203,6 +205,7 @@ impl<T: Copy + Clone> Vector<T> {
     /// let i32_vector: Vector<i32> = Vector::new(25, 8, 0);
     /// let f64_vector: Vector<f64> = i32_vector.into_vec();
     /// assert_eq!(Vector::new(25.0, 8.0, 0.0), f64_vector);
+    /// ```
     pub fn into_vec<U: From<T>>(self) -> Vector<U> {
         Vector {
             x: self.x.into(),
@@ -220,6 +223,7 @@ impl<T: Default> Vector<T> {
     /// use math_vector::Vector;
     /// let v: Vector<i32> = Vector::default();
     /// assert_eq!(Vector::new(0, 0, 0), v);
+    /// ```
     pub fn default() -> Self {
         Self {
             x: T::default(),
@@ -251,6 +255,7 @@ impl<T: Default> Vector<T> {
     /// use math_vector::Vector;
     /// let v = Vector::new(10, 20, 30);
     /// assert_eq!(Vector::new(0, 20, 0), v.ordinate());
+    /// ```
     pub fn ordinate(self) -> Self {
         Self {
             x: Default::default(),
@@ -266,6 +271,7 @@ impl<T: Default> Vector<T> {
     /// use math_vector::Vector;
     /// let v = Vector::new(10, 20, 30);
     /// assert_eq!(Vector::new(0, 0, 30), v.applicate());
+    /// ```
     pub fn applicate(self) -> Self {
         Self {
             x: Default::default(),
@@ -288,6 +294,7 @@ where
     /// let v1 = Vector::new(11.0, -2.5, 3.0);
     /// let v2 = Vector::new(0.5, -2.0, 1.0);
     /// assert_eq!(Vector::new(5.5, 5.0, 3.0), v1.mul_components(v2));
+    /// ```
     pub fn mul_components(self, other: Self) -> Self {
         Self {
             x: self.x * other.x,
@@ -310,6 +317,7 @@ where
     /// let v1 = Vector::new(11.0, -2.5, 3.0);
     /// let v2 = Vector::new(0.5, -2.0, 1.0);
     /// assert_eq!(Vector::new(22.0, 1.25, 3.0), v1.div_components(v2));
+    /// ```
     pub fn div_components(self, other: Self) -> Self {
         Self {
             x: self.x / other.x,
@@ -344,6 +352,7 @@ where
     /// use math_vector::Vector;
     /// let v = Vector::new(21.3, -98.1, 0.0);
     /// assert_eq!(Vector::new(98.1, 21.3, 0.0), v.normal());
+    /// ```
     pub fn normal(self) -> Self {
         Self {
             x: -self.y,
@@ -367,6 +376,7 @@ where
     /// let v1 = Vector::new(1.0, 2.0, 3.0);
     /// let v2 = Vector::new(4.0, 5.0, 6.0);
     /// assert_eq!(32.0, Vector::dot(v1, v2));
+    /// ```
     pub fn dot(v1: Self, v2: Self) -> V {
         v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
     }
@@ -380,6 +390,7 @@ where
     /// use math_vector::Vector;
     /// let v = Vector::new(1.0, 2.0, 3.0);
     /// assert_eq!(14.0, Vector::length_squared(v));
+    /// ```
     pub fn length_squared(self) -> V {
         self.x * self.x + self.y * self.y + self.z * self.z
     }
@@ -398,6 +409,7 @@ where
     /// let v1 = Vector::new(1.0, 2.0, 3.0);
     /// let v2 = Vector::new(4.0, 5.0, 6.0);
     /// assert_eq!(Vector::new(-3.0, 6.0, -3.0), Vector::cross(v1, v2));
+    /// ```
     pub fn cross(v1: Self, v2: Self) -> Self {
         Self {
             x: v1.y * v2.z - v1.z * v2.y,
@@ -419,6 +431,7 @@ where
     /// let v1 = Vector::new(1.0, 2.0, 3.0);
     /// let v2 = Vector::new(-1.0, -4.0, -6.0);
     /// assert_eq!(Vector::new(-0.5, -2.5, -3.75), Vector::lerp(v1, v2, 0.75));
+    /// ```
     pub fn lerp(start: Self, end: Self, progress: T) -> Self {
         start + ((end - start) * progress)
     }
@@ -476,6 +489,7 @@ impl Vector<f32> {
     /// let w = Vector::<f32>::new(10.0, 0.0, 1.0);
     /// assert_eq!(v.is_close(u), true);
     /// assert_eq!(v.is_close(w), false);
+    /// ```
     pub fn is_close(self, other: Self) -> bool {
         let x_diff = self.x - other.x;
         let y_diff = self.y - other.y;
@@ -572,6 +586,7 @@ impl Vector<f64> {
     /// let w = Vector::<f64>::new(10.0, 0.0, 1.0);
     /// assert_eq!(v.is_close(u), true);
     /// assert_eq!(v.is_close(w), false);
+    /// ```
     pub fn is_close(self, other: Self) -> bool {
         let x_diff = self.x - other.x;
         let y_diff = self.y - other.y;
