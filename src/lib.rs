@@ -163,6 +163,12 @@ impl<T: Copy + Clone> Vector<T> {
     }
 
     /// Construct a `Vector` with all components set to the provided value.
+    ///
+    /// # Example
+    /// ```
+    /// use math_vector::Vector;
+    /// let v = Vector::all(42.0);
+    /// assert_eq!(v, Vector::new(42.0, 42.0, 42.0));
     pub fn all(value: T) -> Self {
         Self {
             x: value,
@@ -171,7 +177,7 @@ impl<T: Copy + Clone> Vector<T> {
         }
     }
 
-    /// Convert a `Vector2` of type `U` to one of type `T`. Available only when
+    /// Convert a `Vector` of type `U` to one of type `T`. Available only when
     /// type T has implemented `From<U>`.
     ///
     /// # Example
@@ -180,7 +186,6 @@ impl<T: Copy + Clone> Vector<T> {
     /// let i32_vector: Vector<i32> = Vector::new(25, 8, 0);
     /// let f64_vector: Vector<f64> = Vector::from_vec(i32_vector);
     /// assert_eq!(Vector::new(25.0, 8.0, 0.0), f64_vector);
-    /// ```
     pub fn from_vec<U: Into<T> + Copy + Clone>(src: Vector<U>) -> Vector<T> {
         Vector {
             x: src.x.into(),
@@ -189,17 +194,15 @@ impl<T: Copy + Clone> Vector<T> {
         }
     }
 
-    /// Convert a `Vector2` of type `T` to one of type `U`. Available only when
+    /// Convert a `Vector,` of type `T` to one of type `U`. Available only when
     /// type T has implemented `Into<U>`.
     ///
     /// # Example
     /// ```
     /// use math_vector::Vector;
     /// let i32_vector: Vector<i32> = Vector::new(25, 8, 0);
-    /// let i32_vector: Vector<i32> = Vector::new(25, 8, 0);
     /// let f64_vector: Vector<f64> = i32_vector.into_vec();
     /// assert_eq!(Vector::new(25.0, 8.0, 0.0), f64_vector);
-    /// ```
     pub fn into_vec<U: From<T>>(self) -> Vector<U> {
         Vector {
             x: self.x.into(),
@@ -211,6 +214,12 @@ impl<T: Copy + Clone> Vector<T> {
 
 impl<T: Default> Vector<T> {
     /// Default construct a `Vector` with all components set to 0.
+    ///
+    /// # Example
+    /// ```
+    /// use math_vector::Vector;
+    /// let v: Vector<i32> = Vector::default();
+    /// assert_eq!(Vector::new(0, 0, 0), v);
     pub fn default() -> Self {
         Self {
             x: T::default(),
@@ -279,7 +288,6 @@ where
     /// let v1 = Vector::new(11.0, -2.5, 3.0);
     /// let v2 = Vector::new(0.5, -2.0, 1.0);
     /// assert_eq!(Vector::new(5.5, 5.0, 3.0), v1.mul_components(v2));
-    /// ```
     pub fn mul_components(self, other: Self) -> Self {
         Self {
             x: self.x * other.x,
@@ -302,7 +310,6 @@ where
     /// let v1 = Vector::new(11.0, -2.5, 3.0);
     /// let v2 = Vector::new(0.5, -2.0, 1.0);
     /// assert_eq!(Vector::new(22.0, 1.25, 3.0), v1.div_components(v2));
-    /// ```
     pub fn div_components(self, other: Self) -> Self {
         Self {
             x: self.x / other.x,
@@ -337,7 +344,6 @@ where
     /// use math_vector::Vector;
     /// let v = Vector::new(21.3, -98.1, 0.0);
     /// assert_eq!(Vector::new(98.1, 21.3, 0.0), v.normal());
-    /// ```
     pub fn normal(self) -> Self {
         Self {
             x: -self.y,
@@ -354,6 +360,13 @@ where
     V: Add<U, Output = V> + Copy + Clone,
 {
     /// Get the scalar/dot product of the two `Vector`.
+    ///
+    /// # Example
+    /// ```
+    /// use math_vector::Vector;
+    /// let v1 = Vector::new(1.0, 2.0, 3.0);
+    /// let v2 = Vector::new(4.0, 5.0, 6.0);
+    /// assert_eq!(32.0, Vector::dot(v1, v2));
     pub fn dot(v1: Self, v2: Self) -> V {
         v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
     }
@@ -361,6 +374,12 @@ where
     /// Get the squared length of a `Vector`. This is more performant than using
     /// `length()` -- which is only available for `Vector<f32>` and `Vector<f64>`
     /// -- as it does not perform any square root operation.
+    ///
+    /// # Example
+    ///```
+    /// use math_vector::Vector;
+    /// let v = Vector::new(1.0, 2.0, 3.0);
+    /// assert_eq!(14.0, Vector::length_squared(v));
     pub fn length_squared(self) -> V {
         self.x * self.x + self.y * self.y + self.z * self.z
     }
@@ -372,6 +391,13 @@ where
     U: Sub<U, Output = T> + Copy + Clone,
 {
     /// Get the cross product of the two `Vector`.
+    ///
+    /// # Example
+    /// ```
+    /// use math_vector::Vector;
+    /// let v1 = Vector::new(1.0, 2.0, 3.0);
+    /// let v2 = Vector::new(4.0, 5.0, 6.0);
+    /// assert_eq!(Vector::new(-3.0, 6.0, -3.0), Vector::cross(v1, v2));
     pub fn cross(v1: Self, v2: Self) -> Self {
         Self {
             x: v1.y * v2.z - v1.z * v2.y,
@@ -386,6 +412,13 @@ where
     T: Sub<T, Output = T> + Mul<T, Output = T> + Add<T, Output = T> + Copy + Clone,
 {
     /// Linearly interpolates between two vectors
+    ///
+    /// # Example
+    /// ```
+    /// use math_vector::Vector;
+    /// let v1 = Vector::new(1.0, 2.0, 3.0);
+    /// let v2 = Vector::new(-1.0, -4.0, -6.0);
+    /// assert_eq!(Vector::new(-0.5, -2.5, -3.75), Vector::lerp(v1, v2, 0.75));
     pub fn lerp(start: Self, end: Self, progress: T) -> Self {
         start + ((end - start) * progress)
     }
@@ -493,16 +526,7 @@ impl Vector<f32> {
     /// - `axis` - The axis to rotate around (note it should be a unit vector)
     pub fn rotate(self, angle: f32, axis: Vector<f32>) -> Self {
         let (sin, cos) = angle.sin_cos();
-        let x = (cos + axis.x * axis.x * (1.0 - cos))
-            + (axis.x * axis.y * (1.0 - cos) - axis.y * sin)
-            + (axis.x * axis.z * (1.0 - cos) - axis.y * sin);
-        let y = (axis.x * axis.y * (1.0 - cos) + axis.z * sin)
-            + (cos + axis.y * axis.y * (1.0 - cos))
-            + (axis.y * axis.z * (1.0 - cos) - axis.x * sin);
-        let z = (axis.x * axis.z * (1.0 - cos) + axis.y * sin)
-            + (axis.y * axis.z * (1.0 - cos) + axis.x * sin)
-            + (cos + axis.z * axis.z * (1.0 - cos));
-        Self { x, y, z }
+        self * cos + Vector::cross(axis, self) * sin + axis * Vector::dot(axis, self) * (1.0 - cos)
     }
 
     /// Performs rotation of the vector by the given angle in radians around the z axis
@@ -598,16 +622,7 @@ impl Vector<f64> {
     /// - `axis` - The axis to rotate around (note it should be a unit vector)
     pub fn rotate(self, angle: f64, axis: Vector<f64>) -> Self {
         let (sin, cos) = angle.sin_cos();
-        let x = (cos + axis.x * axis.x * (1.0 - cos))
-            + (axis.x * axis.y * (1.0 - cos) - axis.y * sin)
-            + (axis.x * axis.z * (1.0 - cos) - axis.y * sin);
-        let y = (axis.x * axis.y * (1.0 - cos) + axis.z * sin)
-            + (cos + axis.y * axis.y * (1.0 - cos))
-            + (axis.y * axis.z * (1.0 - cos) - axis.x * sin);
-        let z = (axis.x * axis.z * (1.0 - cos) + axis.y * sin)
-            + (axis.y * axis.z * (1.0 - cos) + axis.x * sin)
-            + (cos + axis.z * axis.z * (1.0 - cos));
-        Self { x, y, z }
+        self * cos + Vector::cross(axis, self) * sin + axis * Vector::dot(axis, self) * (1.0 - cos)
     }
 
     /// Performs rotation of the vector by the given angle in radians around the z axis
