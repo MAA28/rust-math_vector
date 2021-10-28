@@ -55,11 +55,12 @@
 //!     let _v1_len_sq = v1.length_squared();
 //!     let v2_len = v2.length();
 //!     let v2_dir = v2.normalise();
+//!     println!("{} {} {}", v2_dir.x, v2_dir.y, v2_dir.z);
 //!
 //!     // Assuming the operator traits are implemented for the types involved,
 //!     // you can add and subtract Vectors from one-another, as well as
 //!     // multiply and divide them with scalar values.
-//!     assert_eq!(v2, v2_dir * v2_len);
+//!     assert_eq!(v2.is_close(v2_dir * v2_len), true);
 //!     assert_eq!(Vector::new(23.0, 16.5, 12.0),  v2 + v1.into_vec()) ;
 //!
 //!     // If you feel the need to multiply or divide individual components of
@@ -96,7 +97,7 @@ mod protocol;
 mod test;
 
 use proc_vector::{fn_lower_bounded_as, fn_simple_as};
-use protocol::{inv_sqrtx64, inv_sqrtx86};
+use protocol::{InvSqrt32, InvSqrt64, EPSILON};
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 
 /// A 2D vector, containing an `x` and a `y` component. While many types can be
@@ -159,6 +160,15 @@ impl<T: Copy + Clone> Vector<T> {
     /// Create a new `Vector` with the provided components.
     pub fn new(x: T, y: T, z: T) -> Self {
         Self { x, y, z }
+    }
+
+    /// Construct a `Vector` with all components set to the provided value.
+    pub fn all(value: T) -> Self {
+        Self {
+            x: value,
+            y: value,
+            z: value,
+        }
     }
 
     /// Convert a `Vector2` of type `U` to one of type `T`. Available only when
@@ -423,6 +433,22 @@ where
 // Specific Primitive Implementations
 
 impl Vector<f32> {
+    /// If two vectors are almost equal, return true.
+    ///
+    /// # Example
+    /// ```
+    /// use math_vector::Vector;
+    /// let v = Vector::<f32>::new(-1.0, 0.0, 1.0);
+    /// let u = Vector::<f32>::new(-1.000001, 0.000001, 1.000001);
+    /// assert_eq!(v.is_close(u), true);
+    pub fn is_close(self, other: Self) -> bool {
+        let x_diff = self.x - other.x;
+        let y_diff = self.y - other.y;
+        let z_diff = self.z - other.z;
+
+        (x_diff * x_diff + y_diff * y_diff + z_diff * z_diff) <= EPSILON as f32
+    }
+
     /// Get the length of the vector. If possible, favour `length_squared()` over
     /// this function, as it is more performant.
     pub fn length(self) -> f32 {
@@ -437,7 +463,7 @@ impl Vector<f32> {
         if l == 0.0 {
             return self;
         } else {
-            return self * inv_sqrtx86(l);
+            return self * InvSqrt32::inv_sqrt32(l);
         }
     }
 
@@ -494,6 +520,22 @@ impl Vector<f32> {
 }
 
 impl Vector<f64> {
+    /// If two vectors are almost equal, return true.
+    ///
+    /// # Example
+    /// ```
+    /// use math_vector::Vector;
+    /// let v = Vector::<f64>::new(-1.0, 0.0, 1.0);
+    /// let u = Vector::<f64>::new(-1.000001, 0.000001, 1.000001);
+    /// assert_eq!(v.is_close(u), true);
+    pub fn is_close(self, other: Self) -> bool {
+        let x_diff = self.x - other.x;
+        let y_diff = self.y - other.y;
+        let z_diff = self.z - other.z;
+
+        (x_diff * x_diff + y_diff * y_diff + z_diff * z_diff) <= EPSILON
+    }
+
     /// Get the length of the vector. If possible, favour `length_squared()` over
     /// this function, as it is more performant.
     pub fn length(self) -> f64 {
@@ -508,7 +550,7 @@ impl Vector<f64> {
         if l == 0.0 {
             return self;
         } else {
-            return self * inv_sqrtx64(l);
+            return self * InvSqrt64::inv_sqrt64(l);
         }
     }
 
