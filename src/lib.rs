@@ -74,7 +74,7 @@
 //!     assert_eq!(v4, (1.5, 2.3, 3.1).into());
 //!     assert_eq!(v4, [1.5, 2.3, 3.1].into());
 //!
-//!     // Additionally, there is an Into<(T, T)> implementation for any types
+//!     // Additionally, there is an Into<(T, T, T)> implementation for any types
 //!     // that the vector components have their own Into implementations for
 //!     assert_eq!((1.5, 2.3, 3.1), v4.into());
 //!
