@@ -92,6 +92,7 @@ fn add_assign() {
 
     assert_eq!(Vector::new(11.5, 7.0, 4.0), v1);
 }
+
 #[test]
 fn sub() {
     let v1 = Vector::new(10.0, 5.0, 3.0);
