@@ -162,6 +162,13 @@ impl<T: Copy + Clone> Vector<T> {
         Self { x, y, z }
     }
 
+    /// Set the components of the vector to the provided values.
+    pub fn set(&mut self, x: T, y: T, z: T) {
+        self.x = x;
+        self.y = y;
+        self.z = z;
+    }
+
     /// Construct a `Vector` with all components set to the provided value.
     ///
     /// # Example
@@ -504,6 +511,78 @@ impl Vector<f32> {
         f32::sqrt(self.length_squared())
     }
 
+    /// Set the length of the vector.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn set_length(self, length: f32) -> Self {
+        let len = self.length_squared();
+        if len == 0.0 {
+            return self;
+        }
+        self * (length * InvSqrt32::inv_sqrt32(len))
+    }
+
+    /// Set the squared length of the vector.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn set_length_squared(self, length: f32) -> Self {
+        let len = self.length_squared();
+        if len == 0.0 {
+            return self;
+        }
+        self * (length / len)
+    }
+
+    /// Keep the vector's length within the given bounds.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn clamp_length(self, min: Option<f32>, max: Option<f32>) -> Self {
+        let len0 = self.length();
+        if len0 == 0.0 {
+            return self;
+        }
+        let min = min.unwrap_or(0.0);
+        let max = max.unwrap_or(len0);
+        let len = if len0 < min {
+            min
+        } else if len0 > max {
+            max
+        } else {
+            len0
+        };
+        self * (len / len0)
+    }
+
+    /// Keeps the vector's squared length within the given bounds.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn clamp_length_squared(self, min: Option<f32>, max: Option<f32>) -> Self {
+        let len0 = self.length_squared();
+        if len0 == 0.0 {
+            return self;
+        }
+        let min = min.unwrap_or(0.0);
+        let max = max.unwrap_or(len0);
+        let len = if len0 < min {
+            min
+        } else if len0 > max {
+            max
+        } else {
+            len0
+        };
+        self * (len / len0)
+    }
+
+    /// Keeps the vector's length below the given bound.
+    /// If the vector is zero, this will return a zero vector.
+    /// Same as `clamp_length(None, Some(max))`
+    pub fn limit_length(self, max: f32) -> Self {
+        self.clamp_length(None, Some(max))
+    }
+
+    /// Keeps the vector's squared length below the given bound.
+    /// If the vector is zero, this will return a zero vector.
+    /// Same as `clamp_length_squared(None, Some(max))`
+    pub fn limit_length_squared(self, max: f32) -> Self {
+        self.clamp_length_squared(None, Some(max))
+    }
+
     /// Get a new vector with the same direction as this vector, but with a length
     /// of 1.0. If the the length of the vector is 0, then the original vector is
     /// returned.
@@ -599,6 +678,78 @@ impl Vector<f64> {
     /// this function, as it is more performant.
     pub fn length(self) -> f64 {
         f64::sqrt(self.length_squared())
+    }
+
+    /// Set the length of the vector.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn set_length(self, length: f64) -> Self {
+        let len = self.length_squared();
+        if len == 0.0 {
+            return self;
+        }
+        self * (length * InvSqrt64::inv_sqrt64(len))
+    }
+
+    /// Set the squared length of the vector.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn set_length_squared(self, length: f64) -> Self {
+        let len = self.length_squared();
+        if len == 0.0 {
+            return self;
+        }
+        self * (length / len)
+    }
+
+    /// Keep the vector's length within the given bounds.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn clamp_length(self, min: Option<f64>, max: Option<f64>) -> Self {
+        let len0 = self.length();
+        if len0 == 0.0 {
+            return self;
+        }
+        let min = min.unwrap_or(0.0);
+        let max = max.unwrap_or(len0);
+        let len = if len0 < min {
+            min
+        } else if len0 > max {
+            max
+        } else {
+            len0
+        };
+        self * (len / len0)
+    }
+
+    /// Keeps the vector's squared length within the given bounds.
+    /// If the vector is zero, this will return a zero vector.
+    pub fn clamp_length_squared(self, min: Option<f64>, max: Option<f64>) -> Self {
+        let len0 = self.length_squared();
+        if len0 == 0.0 {
+            return self;
+        }
+        let min = min.unwrap_or(0.0);
+        let max = max.unwrap_or(len0);
+        let len = if len0 < min {
+            min
+        } else if len0 > max {
+            max
+        } else {
+            len0
+        };
+        self * (len / len0)
+    }
+
+    /// Keeps the vector's length below the given bound.
+    /// If the vector is zero, this will return a zero vector.
+    /// Same as `clamp_length(None, Some(max))`
+    pub fn limit_length(self, max: f64) -> Self {
+        self.clamp_length(None, Some(max))
+    }
+
+    /// Keeps the vector's squared length below the given bound.
+    /// If the vector is zero, this will return a zero vector.
+    /// Same as `clamp_length_squared(None, Some(max))`
+    pub fn limit_length_squared(self, max: f64) -> Self {
+        self.clamp_length_squared(None, Some(max))
     }
 
     /// Get a new vector with the same direction as this vector, but with a length
