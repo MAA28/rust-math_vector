@@ -269,3 +269,43 @@ fn rotate_f64() {
         true
     );
 }
+
+#[test]
+fn set_length_f32() {
+    let v = Vector::<f32>::new(1.0, 1.0, 1.0);
+    let r = v.set_length(1.0);
+    let x = 3f32.sqrt().recip();
+    assert_eq!(Vector::<f32>::new(x, x, x).is_close(r), true);
+}
+
+#[test]
+fn set_length_f64() {
+    let v = Vector::<f64>::new(1.0, 1.0, 1.0);
+    let r = v.set_length(1.0);
+    let x = 3f64.sqrt().recip();
+    assert_eq!(Vector::<f64>::new(x, x, x).is_close(r), true);
+}
+
+#[test]
+fn clamp_length_f32() {
+    let v = Vector::<f32>::new(1.0, 1.0, 1.0);
+    let r = v.clamp_length(None, Some(1.0));
+    let x = 3f32.sqrt().recip();
+    assert_eq!(Vector::<f32>::new(x, x, x).is_close(r), true);
+}
+
+#[test]
+fn limit_length_f32() {
+    let v = Vector::<f32>::new(1.0, 1.0, 1.0);
+    let r = v.limit_length(1.0);
+    let x = 3f32.sqrt().recip();
+    assert_eq!(Vector::<f32>::new(x, x, x).is_close(r), true);
+}
+
+#[test]
+fn limit_length_f64() {
+    let v = Vector::<f64>::new(1.0, 1.0, 1.0);
+    let r = v.limit_length(1.0);
+    let x = 3f64.sqrt().recip();
+    assert_eq!(Vector::<f64>::new(x, x, x).is_close(r), true);
+}
