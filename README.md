@@ -20,7 +20,7 @@ math_vector = { git = "https://github.com/ThomasByr/rust-math_vector" }
 
 ## changelog
 
-1.  a brand new 2d vector library
+1.  a brand new 2d vector library (now in rust 2021)
 2.  moving to 3d to be more generic (be carefull when compiling old code though)
 3.  fast inverse square root
 4.  more vector handling functions
