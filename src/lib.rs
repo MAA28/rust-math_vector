@@ -505,6 +505,18 @@ impl Vector<f32> {
         (x_diff * x_diff + y_diff * y_diff + z_diff * z_diff) <= EPSILON as f32
     }
 
+    /// Create a unit `Vector` from a given angle.
+    pub fn from_angle(angle: f32) -> Self {
+        let x = angle.cos();
+        let y = angle.sin();
+        Self { x, y, z: 0.0 }
+    }
+
+    /// Reflects a `Vector` off a surface with the given normal.
+    pub fn reflect(self, normal: Self) -> Self {
+        self - (normal * (Vector::dot(self, normal) * 2.0))
+    }
+
     /// Get the length of the vector. If possible, favour `length_squared()` over
     /// this function, as it is more performant.
     pub fn length(self) -> f32 {
@@ -672,6 +684,18 @@ impl Vector<f64> {
         let z_diff = self.z - other.z;
 
         (x_diff * x_diff + y_diff * y_diff + z_diff * z_diff) <= EPSILON
+    }
+
+    /// Create a unit `Vector` from a given angle.
+    pub fn from_angle(angle: f64) -> Self {
+        let x = angle.cos();
+        let y = angle.sin();
+        Self { x, y, z: 0.0 }
+    }
+
+    /// Reflects a `Vector` off a surface with the given normal.
+    pub fn reflect(self, normal: Self) -> Self {
+        self - (normal * (Vector::dot(self, normal) * 2.0))
     }
 
     /// Get the length of the vector. If possible, favour `length_squared()` over
