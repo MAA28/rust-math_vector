@@ -309,3 +309,31 @@ fn limit_length_f64() {
     let x = 3f64.sqrt().recip();
     assert_eq!(Vector::<f64>::new(x, x, x).is_close(r), true);
 }
+
+#[test]
+fn from_angle_f32() {
+    let v = Vector::<f32>::from_angle(std::f32::consts::PI / 2.0);
+    assert_eq!(Vector::<f32>::new(0.0, 1.0, 0.0).is_close(v), true);
+}
+
+#[test]
+fn from_angle_f64() {
+    let v = Vector::<f64>::from_angle(std::f64::consts::PI / 2.0);
+    assert_eq!(Vector::<f64>::new(0.0, 1.0, 0.0).is_close(v), true);
+}
+
+#[test]
+fn reflect_f32() {
+    let v = Vector::<f32>::new(1.0, 1.0, 1.0);
+    let n = Vector::<f32>::new(0.0, 1.0, 0.0);
+    let r = v.reflect(n);
+    assert_eq!(Vector::<f32>::new(1.0, -1.0, 1.0).is_close(r), true);
+}
+
+#[test]
+fn reflect_f64() {
+    let v = Vector::<f64>::new(1.0, 1.0, 1.0);
+    let n = Vector::<f64>::new(0.0, 1.0, 0.0);
+    let r = v.reflect(n);
+    assert_eq!(Vector::<f64>::new(1.0, -1.0, 1.0).is_close(r), true);
+}
