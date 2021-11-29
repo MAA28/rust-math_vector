@@ -612,6 +612,11 @@ impl Vector<f32> {
         (self - other).length()
     }
 
+    /// Get the squared distance between two vectors.
+    pub fn distance_squared(self, other: Vector<f32>) -> f32 {
+        (self - other).length_squared()
+    }
+
     /// Get the vector's direction in radians in the 2d plane.
     pub fn angle(self) -> f32 {
         self.y.atan2(self.x)
@@ -791,6 +796,11 @@ impl Vector<f64> {
     /// Get the distance between two vectors.
     pub fn distance(self, other: Vector<f64>) -> f64 {
         (self - other).length()
+    }
+
+    /// Get the squared distance between two vectors.
+    pub fn distance_squared(self, other: Vector<f64>) -> f64 {
+        (self - other).length_squared()
     }
 
     /// Get the vector's direction in radians in the 2d plane.
