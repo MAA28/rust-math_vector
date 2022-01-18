@@ -32,7 +32,7 @@
 //!
 //!     // If there is no From or Into implementation, then you're out of luck
 //!     // unless you are using specific primitives, such as i32 and f64. In
-//!     // this case you can use specialised functions, as shown below:
+//!     // this case you can use specialized functions, as shown below:
 //!     assert_eq!(Vector::new(13, 11, 9), v2.as_i32s());
 //!
 //!     // The full list of interoperable primitives is as follows:
@@ -105,7 +105,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssi
 /// what functions are available.
 ///
 /// Provided that the components implement the necessary traits, `Vector`s
-/// can be added to or subtracted from one-another, and they can be mulitplied
+/// can be added to or subtracted from one-another, and they can be multiplied
 /// and divided by scalar values.
 ///
 /// There are generally two options for converting between `Vector` types. If
@@ -125,13 +125,13 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssi
 /// ```
 ///
 /// Implementations of `as_types()` are only available when an implementation of
-/// [`into_vec()`] is unavailable. This is to seperate between the lossless casting
+/// [`into_vec()`] is unavailable. This is to separate between the lossless casting
 /// of primitives with `into()` and `from(..)`, and the lossy casting between
 /// primitives of varying detail.
 ///
 /// Casts from signed types to unsigned types have a small additional check that
 /// ensures a lower bound of 0 on the signed value, to reduce the chances of
-/// experiencing undefined behaviour. This means that a `Vector<f64>` with a
+/// experiencing undefined behavior. This means that a `Vector<f64>` with a
 /// value of `(-10.3, 11.1, 0.0)` would become `(0, 11, 0)` when cast to a `Vector<u32>`
 /// with [`as_u32s()`].
 ///
@@ -145,10 +145,6 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssi
 ///   - `usize`
 ///   - `f32`
 ///   - `f64`
-///
-/// [`into_vec()`]: struct.Vector.html#method.into_vec
-/// [`from_vec(..)`]: struct.Vector.html#method.from_vec
-/// [`as_u32s()`]: struct.Vector.html#method.as_u32s-1
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub struct Vector<T> {
     pub x: T,
