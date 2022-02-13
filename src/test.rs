@@ -191,16 +191,16 @@ fn neg() {
 }
 
 #[test]
-fn normalise_f32() {
-    let v = Vector::<f32>::new(1.0, 1.0, 1.0).normalise();
+fn normalize_f32() {
+    let v = Vector::<f32>::new(1.0, 1.0, 1.0).normalize();
     let sqrt3 = f32::sqrt(3.0);
     let u = Vector::<f32>::new(1.0 / sqrt3, 1.0 / sqrt3, 1.0 / sqrt3);
     assert_eq!(v.is_close(u), true);
 }
 
 #[test]
-fn normalise_f64() {
-    let v = Vector::<f64>::new(1.0, 1.0, 1.0).normalise();
+fn normalize_f64() {
+    let v = Vector::<f64>::new(1.0, 1.0, 1.0).normalize();
     let sqrt3 = f64::sqrt(3.0);
     let u = Vector::<f64>::new(1.0 / sqrt3, 1.0 / sqrt3, 1.0 / sqrt3);
     assert_eq!(v.is_close(u), true);
@@ -251,7 +251,7 @@ fn rotate_x_f64() {
 #[test]
 fn rotate_f32() {
     let v = Vector::<f32>::new(1.0, 0.0, 0.0);
-    let axis = Vector::<f32>::new(1.0, 1.0, 0.0).normalise();
+    let axis = Vector::<f32>::new(1.0, 1.0, 0.0).normalize();
     let r = v.rotate(std::f32::consts::PI / 2.0, axis);
     assert_eq!(
         Vector::<f32>::new(0.5, 0.5, -2f32.sqrt().recip()).is_close(r),
@@ -262,7 +262,7 @@ fn rotate_f32() {
 #[test]
 fn rotate_f64() {
     let v = Vector::<f64>::new(1.0, 0.0, 0.0);
-    let axis = Vector::<f64>::new(1.0, 1.0, 0.0).normalise();
+    let axis = Vector::<f64>::new(1.0, 1.0, 0.0).normalize();
     let r = v.rotate(std::f64::consts::PI / 2.0, axis);
     assert_eq!(
         Vector::<f64>::new(0.5, 0.5, -2f64.sqrt().recip()).is_close(r),
