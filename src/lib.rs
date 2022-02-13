@@ -49,12 +49,12 @@
 //!     // result in the vector (0, 2, 11).
 //!
 //!     // For types with an Add and Mul implementation, the functions dot() and
-//!     // length_squared() are available. For access to length(), normalise(),
+//!     // length_squared() are available. For access to length(), normalize(),
 //!     // or angle() however, you must be using either Vector<f32> or
 //!     // Vector<f64>.
 //!     let _v1_len_sq = v1.length_squared();
 //!     let v2_len = v2.length();
-//!     let v2_dir = v2.normalise();
+//!     let v2_dir = v2.normalize();
 //!     println!("{} {} {}", v2_dir.x, v2_dir.y, v2_dir.z);
 //!
 //!     // Assuming the operator traits are implemented for the types involved,
@@ -519,7 +519,8 @@ impl Vector<f32> {
         f32::sqrt(self.length_squared())
     }
 
-    /// Set the length of the vector.
+    /// Return a new vector with the same direction as the original,
+    /// but with a specified length.
     /// If the vector is zero, this will return a zero vector.
     pub fn set_length(self, length: f32) -> Self {
         let len = self.length_squared();
@@ -529,7 +530,8 @@ impl Vector<f32> {
         self * (length * InvSqrt32::inv_sqrt32(len))
     }
 
-    /// Set the squared length of the vector.
+    /// Return a new vector with the same direction as the original,
+    /// but with a specified squared length.
     /// If the vector is zero, this will return a zero vector.
     pub fn set_length_squared(self, length: f32) -> Self {
         let len = self.length_squared();
@@ -594,7 +596,7 @@ impl Vector<f32> {
     /// Get a new vector with the same direction as this vector, but with a length
     /// of 1.0. If the the length of the vector is 0, then the original vector is
     /// returned.
-    pub fn normalise(self) -> Self {
+    pub fn normalize(self) -> Self {
         let l = self.length_squared();
         if l == 0.0 {
             return self;
@@ -705,7 +707,8 @@ impl Vector<f64> {
         f64::sqrt(self.length_squared())
     }
 
-    /// Set the length of the vector.
+    /// Return a new vector with the same direction as the original,
+    /// but with a specified length.
     /// If the vector is zero, this will return a zero vector.
     pub fn set_length(self, length: f64) -> Self {
         let len = self.length_squared();
@@ -715,7 +718,8 @@ impl Vector<f64> {
         self * (length * InvSqrt64::inv_sqrt64(len))
     }
 
-    /// Set the squared length of the vector.
+    /// Return a new vector with the same direction as the original,
+    /// but with a specified squared length.
     /// If the vector is zero, this will return a zero vector.
     pub fn set_length_squared(self, length: f64) -> Self {
         let len = self.length_squared();
@@ -780,7 +784,7 @@ impl Vector<f64> {
     /// Get a new vector with the same direction as this vector, but with a length
     /// of 1.0. If the the length of the vector is 0, then the original vector is
     /// returned.
-    pub fn normalise(self) -> Self {
+    pub fn normalize(self) -> Self {
         let l = self.length_squared();
         if l == 0.0 {
             return self;
