@@ -7,4 +7,4 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-proc_vector = { path = "proc_vector" }
+proc_vector = { version = "1.1.0", path = "proc_vector" }
